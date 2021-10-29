@@ -9,10 +9,19 @@ const centerBlock = document.getElementById('276');
 let previousPos = parseInt(centerBlock.id);
 let currentPos = parseInt(centerBlock.id);
 centerBlock.style.backgroundColor = '#90002c';
-
-document.onkeydown = checkKey;
-
-function checkKey(e) {
+let pos = document.getElementById(currentPos).getBoundingClientRect()
+const generateFood = () => {
+  let cell = Math.floor(Math.random() * (577 - 1) + 1)
+  let foodCell = document.getElementById(cell)
+  foodCell.style.backgroundColor = 'Green'
+}
+const gameOver = () => {
+  currentPos = 276;
+  document.getElementById(previousPos).style.backgroundColor = 'transparent';
+  document.getElementById(currentPos).style.backgroundColor = '#90002c';
+  previousPos = 276;
+}
+const checkKey = (e) => {
 
     e = e || window.event;
 
@@ -23,13 +32,9 @@ function checkKey(e) {
           document.getElementById(previousPos).style.backgroundColor = 'transparent';
           document.getElementById(currentPos).style.backgroundColor = '#90002c';
           previousPos -= 24;
-        } catch{
-          currentPos = 276;
-          document.getElementById(previousPos).style.backgroundColor = 'transparent';
-          document.getElementById(currentPos).style.backgroundColor = '#90002c';
-          previousPos = 276;
+        }catch{
+          gameOver()
         }
-
     }
     else if (e.keyCode == '40') {
         // down arrow
@@ -39,38 +44,39 @@ function checkKey(e) {
           document.getElementById(currentPos).style.backgroundColor = '#90002c';
           previousPos += 24;
         }catch{
-          currentPos = 276;
-          document.getElementById(previousPos).style.backgroundColor = 'transparent';
-          document.getElementById(currentPos).style.backgroundColor = '#90002c';
-          previousPos = 276;
+          gameOver()
         }
     }
     else if (e.keyCode == '37') {
        // left arrow
-       let currentDiv = document.getElementById(currentPos)
-       let pos = currentDiv.getBoundingClientRect()
-       let pos2 = pos.left
-       if (pos2 < 842){
-         console.log(pos2)
-         currentPos --;
-         document.getElementById(previousPos).style.backgroundColor = 'transparent';
-         document.getElementById(currentPos).style.backgroundColor = '#90002c';
-         previousPos --;
+       let pos = document.getElementById(currentPos).getBoundingClientRect()
+       currentPos --;
+       if (currentPos === 0) {
+         gameOver()
        }
-       else{
-         currentPos = 276;
-         document.getElementById(previousPos).style.backgroundColor = 'transparent';
-         document.getElementById(currentPos).style.backgroundColor = '#90002c';
-         previousPos = 276;
+       document.getElementById(previousPos).style.backgroundColor = 'transparent';
+       document.getElementById(currentPos).style.backgroundColor = '#90002c';
+       previousPos --;
+       let newPos = document.getElementById(currentPos).getBoundingClientRect()
+       if (pos.top != newPos.top) {
+         gameOver()
        }
-
     }
     else if (e.keyCode == '39') {
        // right arrow
+       let pos = document.getElementById(currentPos).getBoundingClientRect()
        currentPos ++;
+       if (currentPos === 577) {
+         gameOver()
+       }
        document.getElementById(previousPos).style.backgroundColor = 'transparent';
        document.getElementById(currentPos).style.backgroundColor = '#90002c';
        previousPos ++;
+       let newPos = document.getElementById(currentPos).getBoundingClientRect()
+       if (pos.top != newPos.top) {
+        gameOver()
+       }
     }
-
 }
+document.onkeydown = checkKey;
+generateFood()

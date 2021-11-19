@@ -10,6 +10,42 @@ let previousPos = parseInt(centerBlock.id);
 let currentPos = parseInt(centerBlock.id);
 centerBlock.style.backgroundColor = '#90002c';
 let pos = document.getElementById(currentPos).getBoundingClientRect()
+let startingPos = parseInt(centerBlock.id);
+class Node {
+  constructor(data) {
+    this.data = data;
+    this.next = null;
+  }
+}
+class LinkedList {
+  constructor(head = null) {
+    this.head = head;
+    this.size = 0;
+  }
+  add(element) {
+    var node = new Node(element);
+    var current;
+    if (this.head == null){
+        this.head = node;
+        console.log('test');}
+    else {
+        current = this.head;
+        while (current.next) {
+            current = current.next;
+        }
+        current.next = node;
+    }
+    this.size++;
+  }
+}
+
+let snake = new LinkedList();
+snake.add(startingPos)
+console.log(snake.head.data)
+snake.add(256);
+console.log(snake.head.next.data)
+
+
 const generateFood = () => {
   let cell = Math.floor(Math.random() * (577 - 1) + 1)
   let foodCell = document.getElementById(cell)

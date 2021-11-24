@@ -5,11 +5,17 @@ for (let i = 1; i < 577; i++) {
   div.setAttribute('id', i)
   grid.appendChild(div);
 }
+const generateFood = () => {
+  let cell = Math.floor(Math.random() * (577 - 1) + 1)
+  newFood.cell = cell
+  let foodCell = document.getElementById(cell)
+  foodCell.style.backgroundColor = 'Green'
+}
 const centerBlock = document.getElementById('276');
 let previousPos = parseInt(centerBlock.id);
 let currentPos = parseInt(centerBlock.id);
 centerBlock.style.backgroundColor = '#90002c';
-let pos = document.getElementById(currentPos).getBoundingClientRect()
+// let pos = document.getElementById(currentPos).getBoundingClientRect()
 let startingPos = parseInt(centerBlock.id);
 class Node {
   constructor(data) {
@@ -27,35 +33,83 @@ class LinkedList {
     var current;
     if (this.head == null){
         this.head = node;
-        console.log('test');}
+    }
     else {
         current = this.head;
         while (current.next) {
             current = current.next;
         }
         current.next = node;
-    }
+      }
     this.size++;
+    }
+
+  insertAt(element, index) {
+    // creates a new node
+    var node = new Node(element);
+    var curr, prev;
+
+    curr = this.head;
+
+    // add the element to the
+    // first index
+    if (index == 0) {
+      node.next = this.head;
+      this.head = node;
+    }
+    else {
+      curr = this.head;
+      var it = 0;
+
+      // iterate over the list to find
+      // the position to insert
+      while (it < index) {
+        it++;
+        prev = curr;
+        curr = curr.next;
+      }
+
+    // adding an element
+      node.next = curr;
+      prev.next = node;
+    }
+  this.size++;
+  }
+  getLast() {
+    if (!this.head) {
+      return null;
+    }
+    let node = this.head;
+    while (node) {
+      if (!node.next) {
+        return node;
+      }
+      node = node.next
+    }
   }
 }
-
 let snake = new LinkedList();
 snake.add(startingPos)
-console.log(snake.head.data)
-snake.add(256);
-console.log(snake.head.next.data)
+snake.add(previousPos)
+console.log(snake.head.data, snake.getLast())
 
-
-const generateFood = () => {
-  let cell = Math.floor(Math.random() * (577 - 1) + 1)
-  let foodCell = document.getElementById(cell)
-  foodCell.style.backgroundColor = 'Green'
+class Food {
+  constructor(cell){
+    this.cell = cell;
+    this.isEaten = null;
 }
+}
+let newFood = new Food(20)
+console.log(newFood)
+
+
+
 const gameOver = () => {
-  currentPos = 276;
-  document.getElementById(previousPos).style.backgroundColor = 'transparent';
-  document.getElementById(currentPos).style.backgroundColor = '#90002c';
-  previousPos = 276;
+  snake.head.data = 276;
+  document.getElementById(snake.getLast().data).style.backgroundColor = 'transparent';
+  document.getElementById(snake.head.data).style.backgroundColor = '#90002c';
+  snake.getLast().data = 276;
+  generateFood()
 }
 const checkKey = (e) => {
 
@@ -64,10 +118,10 @@ const checkKey = (e) => {
     if (e.keyCode == '38') {
         // up arrow
         try{
-          currentPos -= 24;
-          document.getElementById(previousPos).style.backgroundColor = 'transparent';
-          document.getElementById(currentPos).style.backgroundColor = '#90002c';
-          previousPos -= 24;
+          snake.head.data -= 24;
+          document.getElementById(snake.getLast().data).style.backgroundColor = 'transparent';
+          document.getElementById(snake.head.data).style.backgroundColor = '#90002c';
+          snake.getLast().data -= 24;
         }catch{
           gameOver()
         }
@@ -75,40 +129,40 @@ const checkKey = (e) => {
     else if (e.keyCode == '40') {
         // down arrow
         try{
-          currentPos += 24;
-          document.getElementById(previousPos).style.backgroundColor = 'transparent';
-          document.getElementById(currentPos).style.backgroundColor = '#90002c';
-          previousPos += 24;
+          snake.head.data += 24;
+          document.getElementById(snake.getLast().data).style.backgroundColor = 'transparent';
+          document.getElementById(snake.head.data).style.backgroundColor = '#90002c';
+          snake.getLast().data += 24;
         }catch{
           gameOver()
         }
     }
     else if (e.keyCode == '37') {
        // left arrow
-       let pos = document.getElementById(currentPos).getBoundingClientRect()
-       currentPos --;
-       if (currentPos === 0) {
+       let pos = document.getElementById(snake.head.data).getBoundingClientRect()
+       snake.head.data --;
+       if (snake.head.data === 0) {
          gameOver()
        }
-       document.getElementById(previousPos).style.backgroundColor = 'transparent';
-       document.getElementById(currentPos).style.backgroundColor = '#90002c';
-       previousPos --;
-       let newPos = document.getElementById(currentPos).getBoundingClientRect()
+       document.getElementById(snake.getLast().data).style.backgroundColor = 'transparent';
+       document.getElementById(snake.head.data).style.backgroundColor = '#90002c';
+       snake.getLast().data --;
+       let newPos = document.getElementById(snake.head.data).getBoundingClientRect()
        if (pos.top != newPos.top) {
          gameOver()
        }
     }
     else if (e.keyCode == '39') {
        // right arrow
-       let pos = document.getElementById(currentPos).getBoundingClientRect()
-       currentPos ++;
-       if (currentPos === 577) {
+       let pos = document.getElementById(snake.head.data).getBoundingClientRect()
+       snake.head.data ++;
+       if (snake.head.data === 577) {
          gameOver()
        }
-       document.getElementById(previousPos).style.backgroundColor = 'transparent';
-       document.getElementById(currentPos).style.backgroundColor = '#90002c';
-       previousPos ++;
-       let newPos = document.getElementById(currentPos).getBoundingClientRect()
+       document.getElementById(snake.getLast().data).style.backgroundColor = 'transparent';
+       document.getElementById(snake.head.data).style.backgroundColor = '#90002c';
+       snake.getLast().data ++;
+       let newPos = document.getElementById(snake.head.data).getBoundingClientRect()
        if (pos.top != newPos.top) {
         gameOver()
        }

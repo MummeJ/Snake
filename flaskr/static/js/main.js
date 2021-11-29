@@ -14,10 +14,11 @@ const generateFood = () => {
 }
 
 const eatFood = () => {
-  if (snake.head.cell === food.cell) {
-    food.isEaten = true;
-    console.log(food.isEaten)
-  }
+  if (snake.head.cell === food.cell){
+  food.isEaten = true;
+  snake.insertAt(food.cell, 0)
+  console.log(snake)}
+
 
 }
 const centerBlock = document.getElementById('276');
@@ -96,6 +97,18 @@ class LinkedList {
       node = node.next
     }
   }
+  nextToLast() {
+    let node = this.head;
+    let last = this.head.next;
+    while (last) {
+      if (last.next === null){
+        return node;
+      }
+      last = last.next
+      node = node.next
+
+    }
+  }
 }
 let snake = new LinkedList();
 snake.add(startingPos)
@@ -127,10 +140,10 @@ const checkKey = (e) => {
     if (e.keyCode == '38') {
         // up arrow
         try{
+          snake.getLast().cell = snake.head.cell
           snake.head.cell -= 24;
           document.getElementById(snake.getLast().cell).style.backgroundColor = 'transparent';
           document.getElementById(snake.head.cell).style.backgroundColor = '#90002c';
-          snake.getLast().cell -= 24;
         }catch{
           gameOver()
         }
@@ -138,10 +151,12 @@ const checkKey = (e) => {
     else if (e.keyCode == '40') {
         // down arrow
         try{
+          eatFood()
+          snake.getLast().cell = snake[snake.size - 1].data
           snake.head.cell += 24;
           document.getElementById(snake.getLast().cell).style.backgroundColor = 'transparent';
-          document.getElementById(snake.head.cell).style.backgroundColor = '#90002c';
-          snake.getLast().cell += 24;
+          document.getElementById(snake.head.cell).style.backgroundColor = '#90002c'
+          console.log(snake)
         }catch{
           gameOver()
         }

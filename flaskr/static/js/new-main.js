@@ -6,10 +6,55 @@ for (let i = 1; i < 577; i++) {
   grid.appendChild(div);
 }
 
+let speed = 1
 
-const timeout = () => {
-  return null
+const pause = (num) => {
+  return new Promise(resolve => setTimeout(() => {
+    resolve();
+  }, num));
 }
+
+const down = () => {
+  if (snake.head.next === null) {
+    snake.add(snake.head.cell)
+    snake.head.cell = snake.head.cell + 24
+  }
+  else{
+    snake.getLast().cell = snake.getLast().cell + 24
+    snake.head.cell = snake.head.cell + 24
+  }
+}
+const up = () => {
+  if (snake.head.next === null) {
+    snake.add(snake.head.cell)
+    snake.head.cell = snake.head.cell - 24
+  }
+  else{
+    snake.getLast().cell = snake.getLast().cell - 24
+    snake.head.cell = snake.head.cell - 24
+  }
+}
+const left = () => {
+  if (snake.head.next === null) {
+    snake.add(snake.head.cell)
+    snake.head.cell --
+  }
+  else{
+    snake.getLast().cell --
+    snake.head.cell --
+  }
+}
+const right = () => {
+  if (snake.head.next === null) {
+    snake.add(snake.head.cell)
+    snake.head.cell ++
+  }
+  else{
+    snake.getLast().cell ++
+    snake.head.cell ++
+  }
+}
+
 class Node {
   constructor(cell) {
     this.cell = cell;
@@ -50,11 +95,15 @@ class LinkedList {
   }
 }
 let gameOver = false
-const startGame = () => {
+const startGame = async () => {
   while (!gameOver){
-    let node, snakeBody;
+    let node, snakeBody, tail;
     node = snake.head;
-    console.log(snake.size)
+    if (snake.size != 1 ){
+      console.log('test')
+      tail = document.getElementById(snake.getLast().cell)
+      tail.style.backgroundColor = 'Transparent'
+    }
     for (let num = 0; num < snake.size; num ++) {
       if (snake.size === 1){
         snakeBody = document.getElementById(node.cell)
@@ -64,16 +113,16 @@ const startGame = () => {
       else {
         snakeBody = document.getElementById(node.cell)
         snakeBody.style.backgroundColor = 'Green'
+        tail.style.backgroundColor = 'Transparent'
         node = node.next
-        console.log('test')
       }
     }
-    snake.add(snake.getLast().cell + 24)
-    setTimeout(startGame, 1000);
+    console.log(snake);
+    await pause(1000 / speed);
+    right()
     // gameOver = true;
   }};
 
 let snake = new LinkedList;
 snake.add(276)
-snake.add(252)
 startGame()

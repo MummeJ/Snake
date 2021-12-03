@@ -6,8 +6,9 @@ for (let i = 1; i < 577; i++) {
   grid.appendChild(div);
 }
 
-let speed = 1
+snake.head.cell
 
+let speed = 1
 const pause = (num) => {
   return new Promise(resolve => setTimeout(() => {
     resolve();
@@ -40,10 +41,17 @@ const left = () => {
     snake.head.cell --
   }
   else{
-    snake.getLast().cell --
-    snake.head.cell --
+    let node = snake.head;
+    let next = node.next
+    while (!next.cell) {
+      next.cell = node.cell;
+      node = node.next
+    }
   }
-}
+    snake.head.cell --
+    // snake.getLast().cell --
+    // snake.head.cell --
+  }
 const right = () => {
   if (snake.head.next === null) {
     snake.add(snake.head.cell)
@@ -53,6 +61,43 @@ const right = () => {
     snake.getLast().cell ++
     snake.head.cell ++
   }
+}
+let upArrow = false;
+let downArrow = false;
+let leftArrow = false;
+let rightArrow = false;
+const checkKey = (e) => {
+
+    e = e || window.event;
+
+    if (e.keyCode == '38') {
+        // up arrow
+        downArrow = false;
+        leftArrow = false;
+        rightArrow = false;
+        upArrow = true;
+    }
+    else if (e.keyCode == '40') {
+        // down arrow
+        upArrow = false;
+        leftArrow = false;
+        rightArrow = false;
+        downArrow = true;
+    }
+    else if (e.keyCode == '37') {
+       // left arrow
+       upArrow = false;
+       downArrow = false;
+       rightArrow = false;
+       leftArrow = true;
+    }
+    else if (e.keyCode == '39') {
+       // right arrow
+       upArrow = false;
+       downArrow = false;
+       leftArrow = false;
+       rightArrow = true;
+    }
 }
 
 class Node {
@@ -65,6 +110,14 @@ class LinkedList {
   constructor(head = null) {
     this.head = head;
     this.size = 0;
+  }
+  shift() {
+    let node = this.head;
+    let next = node.next
+    while (!next.cell) {
+      next.cell = node.cell;
+      node = node.next
+    }
   }
   add(element) {
     var node = new Node(element);
@@ -113,16 +166,34 @@ const startGame = async () => {
       else {
         snakeBody = document.getElementById(node.cell)
         snakeBody.style.backgroundColor = 'Green'
+        tail = document.getElementById(snake.getLast().cell)
         tail.style.backgroundColor = 'Transparent'
+        // tail.style.backgroundColor = 'Transparent'
         node = node.next
       }
     }
     console.log(snake);
     await pause(1000 / speed);
-    right()
+    switch (true) {
+      case (downArrow):
+        down();
+        break;
+      case (upArrow):
+        up();
+        break;
+      case (leftArrow):
+        left();
+        break;
+      case (rightArrow):
+        right();
+        break;
+    }
     // gameOver = true;
   }};
 
 let snake = new LinkedList;
 snake.add(276)
+snake.add(252)
+snake.add(228)
+document.onkeydown = checkKey;
 startGame()

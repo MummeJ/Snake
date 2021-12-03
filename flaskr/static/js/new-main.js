@@ -6,7 +6,6 @@ for (let i = 1; i < 577; i++) {
   grid.appendChild(div);
 }
 
-snake.head.cell
 
 let speed = 1
 const pause = (num) => {
@@ -113,16 +112,21 @@ class LinkedList {
   }
   shift() {
     let node = this.head;
-    let next = node.next
-    while (!next.cell) {
-      next.cell = node.cell;
+    let curr = node.next
+    let temp = curr
+    curr.cell = node.cell
+    while (node) {
+      console.log('test')
+      curr = curr.next;
+      curr = temp.cell
+      temp = curr.next;
       node = node.next
     }
   }
   add(element) {
     var node = new Node(element);
     var current;
-    if (this.head == null){
+    if (this.head === null){
         this.head = node;
     }
     else {
@@ -188,7 +192,7 @@ const startGame = async () => {
         right();
         break;
     }
-    // gameOver = true;
+    gameOver = true;
   }};
 
 let snake = new LinkedList;

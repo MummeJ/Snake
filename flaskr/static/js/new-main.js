@@ -113,14 +113,16 @@ class LinkedList {
   shift() {
     let node = this.head;
     let curr = node.next
-    let temp = curr
+    let temp = curr.cell
     curr.cell = node.cell
-    while (node) {
+    let c = 0
+
+    while (curr) {
+      curr = curr.next
+      curr.cell = temp;
       console.log('test')
-      curr = curr.next;
-      curr = temp.cell
-      temp = curr.next;
-      node = node.next
+      c ++
+      temp = curr.cell
     }
   }
   add(element) {
@@ -157,7 +159,6 @@ const startGame = async () => {
     let node, snakeBody, tail;
     node = snake.head;
     if (snake.size != 1 ){
-      console.log('test')
       tail = document.getElementById(snake.getLast().cell)
       tail.style.backgroundColor = 'Transparent'
     }
@@ -199,5 +200,7 @@ let snake = new LinkedList;
 snake.add(276)
 snake.add(252)
 snake.add(228)
+snake.add(204)
+snake.add(180)
 document.onkeydown = checkKey;
 startGame()

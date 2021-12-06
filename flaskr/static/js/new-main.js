@@ -7,7 +7,7 @@ for (let i = 1; i < 577; i++) {
 }
 
 
-let speed = 1
+let speed = 5
 const pause = (num) => {
   return new Promise(resolve => setTimeout(() => {
     resolve();
@@ -15,14 +15,18 @@ const pause = (num) => {
 }
 
 const down = () => {
-  if (snake.head.next === null) {
+  try{
+    if (snake.head.next === null) {
     snake.add(snake.head.cell)
     snake.head.cell = snake.head.cell + 24
+    }
+    else{
+    snake.shift(snake.head.cell + 24)
+  }}
+  catch{
+    gameover = true
   }
-  else{
-    snake.getLast().cell = snake.getLast().cell + 24
-    snake.head.cell = snake.head.cell + 24
-  }
+
 }
 const up = () => {
   if (snake.head.next === null) {
@@ -30,8 +34,7 @@ const up = () => {
     snake.head.cell = snake.head.cell - 24
   }
   else{
-    snake.getLast().cell = snake.getLast().cell - 24
-    snake.head.cell = snake.head.cell - 24
+    snake.shift(snake.head.cell - 24)
   }
 }
 const left = () => {
@@ -40,25 +43,16 @@ const left = () => {
     snake.head.cell --
   }
   else{
-    let node = snake.head;
-    let next = node.next
-    while (!next.cell) {
-      next.cell = node.cell;
-      node = node.next
-    }
+    snake.shift(snake.head.cell - 1)
   }
-    snake.head.cell --
-    // snake.getLast().cell --
-    // snake.head.cell --
-  }
+}
 const right = () => {
   if (snake.head.next === null) {
     snake.add(snake.head.cell)
     snake.head.cell ++
   }
   else{
-    snake.getLast().cell ++
-    snake.head.cell ++
+    snake.shift(snake.head.cell + 1)
   }
 }
 let upArrow = false;
@@ -97,6 +91,11 @@ const checkKey = (e) => {
        leftArrow = false;
        rightArrow = true;
     }
+}
+
+const reset = () => {
+  let snake = new LinkedList;
+  snake.add(276)
 }
 
 class Node {
@@ -176,7 +175,6 @@ const startGame = async () => {
         node = node.next
       }
     }
-    console.log(snake);
     await pause(1000 / speed);
     switch (true) {
       case (downArrow):
@@ -192,7 +190,9 @@ const startGame = async () => {
         right();
         break;
     }
-    gameOver = true;
+    if (!gameOver){
+      reset()
+    }
   }};
 
 let snake = new LinkedList;

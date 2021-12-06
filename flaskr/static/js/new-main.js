@@ -110,19 +110,18 @@ class LinkedList {
     this.head = head;
     this.size = 0;
   }
-  shift() {
-    let node = this.head;
-    let curr = node.next
-    let temp = curr.cell
-    curr.cell = node.cell
-    let c = 0
-
-    while (curr) {
-      curr = curr.next
-      curr.cell = temp;
-      console.log('test')
-      c ++
-      temp = curr.cell
+  shift(val) {
+    let node = this.head
+    let list = []
+    list.push(val)
+    while(node.next){
+      list.push(node.cell)
+      node = node.next
+    }
+    node = this.head
+    for (let i = 0; i < list.length; i++){
+      node.cell = list[i]
+      node = node.next
     }
   }
   add(element) {

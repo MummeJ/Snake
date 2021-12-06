@@ -43,7 +43,12 @@ const left = () => {
     snake.head.cell --
   }
   else{
+    let pos = document.getElementById(snake.head.cell).getBoundingClientRect()
     snake.shift(snake.head.cell - 1)
+    let newPos = document.getElementById(snake.head.cell).getBoundingClientRect()
+    if (pos.top != newPos.top) {
+      gameOver = true
+    }
   }
 }
 const right = () => {
@@ -94,8 +99,10 @@ const checkKey = (e) => {
 }
 
 const reset = () => {
-  let snake = new LinkedList;
+  snake.clear()
   snake.add(276)
+  gameOver = false
+  startGame()
 }
 
 class Node {
@@ -137,6 +144,9 @@ class LinkedList {
       current.next = node;
     }
     this.size++;
+  }
+  clear() {
+    this.head = null;
   }
   getLast() {
     if (!this.head) {
@@ -190,7 +200,7 @@ const startGame = async () => {
         right();
         break;
     }
-    if (!gameOver){
+    if (gameOver){
       reset()
     }
   }};

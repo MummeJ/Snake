@@ -7,7 +7,7 @@ for (let i = 1; i < 577; i++) {
 }
 
 
-let speed = 5
+let speed = 15
 const pause = (num) => {
   return new Promise(resolve => setTimeout(() => {
     resolve();
@@ -15,26 +15,33 @@ const pause = (num) => {
 }
 
 const down = () => {
-  try{
-    if (snake.head.next === null) {
+  if (gameOver) {
+    startGame()
+  }
+  if (snake.head.next === null) {
     snake.add(snake.head.cell)
     snake.head.cell = snake.head.cell + 24
-    }
-    else{
-    snake.shift(snake.head.cell + 24)
-  }}
-  catch{
-    gameover = true
   }
-
+  else{
+  snake.shift(snake.head.cell + 24)
+  }
+  if (snake.head.cell > 576) {
+    gameOver = true
+  }
 }
 const up = () => {
+  if (gameOver) {
+    startGame()
+  }
   if (snake.head.next === null) {
     snake.add(snake.head.cell)
     snake.head.cell = snake.head.cell - 24
   }
   else{
     snake.shift(snake.head.cell - 24)
+  }
+  if (snake.head.cell < 1) {
+    gameOver = true
   }
 }
 const left = () => {
@@ -45,9 +52,14 @@ const left = () => {
   else{
     let pos = document.getElementById(snake.head.cell).getBoundingClientRect()
     snake.shift(snake.head.cell - 1)
-    let newPos = document.getElementById(snake.head.cell).getBoundingClientRect()
-    if (pos.top != newPos.top) {
+    if (snake.head.cell < 1) {
       gameOver = true
+    }
+    else{
+      let newPos = document.getElementById(snake.head.cell).getBoundingClientRect()
+      if (pos.top != newPos.top) {
+        gameOver = true
+      }
     }
   }
 }
@@ -57,7 +69,17 @@ const right = () => {
     snake.head.cell ++
   }
   else{
+    let pos = document.getElementById(snake.head.cell).getBoundingClientRect()
     snake.shift(snake.head.cell + 1)
+    if (snake.head.cell > 576) {
+      gameOver = true
+    }
+    else {
+      let newPos = document.getElementById(snake.head.cell).getBoundingClientRect()
+      if (pos.top != newPos.top) {
+        gameOver = true
+      }
+    }
   }
 }
 let upArrow = false;
@@ -70,6 +92,10 @@ const checkKey = (e) => {
 
     if (e.keyCode == '38') {
         // up arrow
+        if(gameOver) {
+          gameOver = false
+          startGame()
+        }
         downArrow = false;
         leftArrow = false;
         rightArrow = false;
@@ -77,6 +103,10 @@ const checkKey = (e) => {
     }
     else if (e.keyCode == '40') {
         // down arrow
+        if(gameOver) {
+          gameOver = false
+          startGame()
+        }
         upArrow = false;
         leftArrow = false;
         rightArrow = false;
@@ -84,25 +114,43 @@ const checkKey = (e) => {
     }
     else if (e.keyCode == '37') {
        // left arrow
+       if(gameOver) {
+         gameOver = false
+         startGame()
+       }
        upArrow = false;
        downArrow = false;
        rightArrow = false;
        leftArrow = true;
     }
     else if (e.keyCode == '39') {
-       // right arrow
-       upArrow = false;
-       downArrow = false;
-       leftArrow = false;
-       rightArrow = true;
-    }
+     // right arrow
+     if(gameOver) {
+       gameOver = false
+       startGame()
+     }
+     upArrow = false;
+     downArrow = false;
+     leftArrow = false;
+     rightArrow = true;
+  }
 }
 
 const reset = () => {
+  for (let id = 1; id < 577; id ++){
+    cell = document.getElementById(id)
+    cell.style.backgroundColor = 'Transparent'
+  }
+  upArrow = false;
+  downArrow = false;
+  leftArrow = false;
+  rightArrow = false;
   snake.clear()
   snake.add(276)
-  gameOver = false
-  startGame()
+  snakeBody = document.getElementById(snake.head.cell)
+  snakeBody.style.backgroundColor = 'Green'
+  // gameOver = false
+  console.log(snake)
 }
 
 class Node {
@@ -147,6 +195,7 @@ class LinkedList {
   }
   clear() {
     this.head = null;
+    this.size = 0
   }
   getLast() {
     if (!this.head) {
@@ -161,9 +210,10 @@ class LinkedList {
     }
   }
 }
-let gameOver = false
+let gameOver = true
 const startGame = async () => {
   while (!gameOver){
+    console.log('while loop test')
     let node, snakeBody, tail;
     node = snake.head;
     if (snake.size != 1 ){
@@ -185,7 +235,7 @@ const startGame = async () => {
         node = node.next
       }
     }
-    await pause(1000 / speed);
+    await pause(1000 / speed).then().catch(err => console.log('test'));
     switch (true) {
       case (downArrow):
         down();
@@ -201,15 +251,14 @@ const startGame = async () => {
         break;
     }
     if (gameOver){
+      console.log('test')
       reset()
     }
   }};
 
 let snake = new LinkedList;
 snake.add(276)
-snake.add(252)
-snake.add(228)
-snake.add(204)
-snake.add(180)
+snakeBody = document.getElementById(snake.head.cell)
+snakeBody.style.backgroundColor = 'Green'
 document.onkeydown = checkKey;
-startGame()
+// startGame()

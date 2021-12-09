@@ -7,7 +7,7 @@ for (let i = 1; i < 577; i++) {
 }
 
 
-let speed = 7
+let speed = 5
 const pause = (num) => {
   return new Promise(resolve => setTimeout(() => {
     resolve();
@@ -22,11 +22,7 @@ const down = () => {
     snake.head.cell = snake.head.cell + 24
   }
   else{
-    if (snake.body().includes(snake.head.cell + 24)) {
-      gameOver = true
-    }else {
     snake.shift(snake.head.cell + 24)
-  }
   }
   if (snake.head.cell > 576) {
     gameOver = true
@@ -73,6 +69,7 @@ const right = () => {
   }
   else{
     let pos = document.getElementById(snake.head.cell).getBoundingClientRect()
+
     snake.shift(snake.head.cell + 1)
     if (snake.head.cell > 576) {
       gameOver = true
@@ -142,7 +139,29 @@ const generateFood = (excludeArray=[276, 276]) => {
   const randomNumber = Math.floor(Math.random() * (576 - 1 + 1 - excludeArray.length)) + 1;
   return randomNumber + excludeArray.sort((a, b) => a - b).reduce((acc, element) => { return randomNumber >= element - acc ? acc + 1 : acc}, 0);
 }
-const collision = (newHead) => {
+const collision = () => {
+  switch (true) {
+    case (downArrow):
+      if (snake.body().includes(snake.head.cell + 24)){
+        gameOver = true;
+      }
+      break;
+    case (upArrow):
+      if (snake.body().includes(snake.head.cell - 24)){
+        gameOver = true;
+      }
+      break;
+    case (leftArrow):
+      if (snake.body().includes(snake.head.cell - 1)){
+        gameOver = true;
+      }
+      break;
+    case (rightArrow):
+      if (snake.body().includes(snake.head.cell + 1)){
+        gameOver = true;
+      }
+      break;
+  }
   if (snake.body().includes()){
     gameOver = true
   }
@@ -169,6 +188,10 @@ const reset = () => {
   snake.add(276)
   snakeBody = document.getElementById(snake.head.cell)
   snakeBody.style.backgroundColor = 'Green'
+  food = new Food()
+  foodObj = document.getElementById(food.cell)
+  foodObj.style.backgroundColor = 'Red'
+  // eatFood()
 }
 
 class Node {
@@ -247,7 +270,6 @@ let gameOver = true
 const startGame = async () => {
   while (!gameOver){
     eatFood()
-    console.log('while loop test')
     let node, snakeBody, tail;
     node = snake.head;
     if (snake.size != 1 ){
@@ -272,15 +294,19 @@ const startGame = async () => {
     await pause(1000 / speed);
     switch (true) {
       case (downArrow):
+        collision()
         down();
         break;
       case (upArrow):
+        collision()
         up();
         break;
       case (leftArrow):
+        collision()
         left();
         break;
       case (rightArrow):
+        collision()
         right();
         break;
     }
@@ -294,7 +320,6 @@ snake.add(276)
 snakeBody = document.getElementById(snake.head.cell)
 snakeBody.style.backgroundColor = 'Green'
 let food = new Food()
-
 let foodObj = document.getElementById(food.cell)
 foodObj.style.backgroundColor = 'Red'
 

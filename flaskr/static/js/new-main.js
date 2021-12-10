@@ -7,7 +7,7 @@ for (let i = 1; i < 577; i++) {
 }
 
 
-let speed = 5
+let speed = 10
 const pause = (num) => {
   return new Promise(resolve => setTimeout(() => {
     resolve();
@@ -168,14 +168,15 @@ const collision = () => {
 }
 const eatFood = () => {
   if (snake.head.cell === food.cell) {
-    snake.add(snake.head.cell)
+    snake.add(food.cell)
     food.isEaten = true
     food.cell = generateFood(snake.body())
     let foodObj = document.getElementById(food.cell)
     foodObj.style.backgroundColor = 'Red'
   }
 }
-const reset = () => {
+const reset = async () => {
+  await pause(1000 / 1);
   for (let id = 1; id < 577; id ++){
     cell = document.getElementById(id)
     cell.style.backgroundColor = 'Transparent'
@@ -191,7 +192,6 @@ const reset = () => {
   food = new Food()
   foodObj = document.getElementById(food.cell)
   foodObj.style.backgroundColor = 'Red'
-  // eatFood()
 }
 
 class Node {
@@ -226,6 +226,7 @@ class LinkedList {
       list.push(node.cell)
       node = node.next
     }
+    list.pop()
     return list;
   }
   add(element) {
@@ -287,7 +288,6 @@ const startGame = async () => {
         snakeBody.style.backgroundColor = 'Green'
         tail = document.getElementById(snake.getLast().cell)
         tail.style.backgroundColor = 'Transparent'
-        // tail.style.backgroundColor = 'Transparent'
         node = node.next
       }
     }

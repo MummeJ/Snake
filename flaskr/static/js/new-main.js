@@ -6,8 +6,7 @@ for (let i = 1; i < 577; i++) {
   grid.appendChild(div);
 }
 
-
-let speed = 10
+let speed = 8
 const pause = (num) => {
   return new Promise(resolve => setTimeout(() => {
     resolve();
@@ -270,7 +269,6 @@ class Food {
 let gameOver = true
 const startGame = async () => {
   while (!gameOver){
-    eatFood()
     let node, snakeBody, tail;
     node = snake.head;
     if (snake.size != 1 ){
@@ -291,6 +289,7 @@ const startGame = async () => {
         node = node.next
       }
     }
+    eatFood()
     await pause(1000 / speed);
     switch (true) {
       case (downArrow):
@@ -322,5 +321,6 @@ snakeBody.style.backgroundColor = 'Green'
 let food = new Food()
 let foodObj = document.getElementById(food.cell)
 foodObj.style.backgroundColor = 'Red'
-
 document.onkeydown = checkKey;
+
+// export { speed };

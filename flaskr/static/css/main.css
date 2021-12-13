@@ -69,19 +69,29 @@ H1 {
   margin: auto;
 }
 
-#Start-Msg {
-  padding-top: 20px;
-  z-index: 8;
-}
 ul {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   list-style-type: none;
   background-color: #fff8c2;
   border: 5px solid black;
 }
 
-li {
+#score{
+  font-family: 'Press Start 2P', cursive;
+  color: #a30000;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: bold;
+  background-color: 'red';
+  padding-top: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+
+.tab {
   font-family: 'Press Start 2P', cursive;
   color: #a30000;
   text-decoration: none;

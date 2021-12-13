@@ -5,7 +5,8 @@ for (let i = 1; i < 577; i++) {
   div.setAttribute('id', i)
   grid.appendChild(div);
 }
-
+let count = 2
+const score = document.getElementById('score')
 let speed = 8
 const pause = (num) => {
   return new Promise(resolve => setTimeout(() => {
@@ -93,6 +94,8 @@ const checkKey = (e) => {
         // up arrow
         if(gameOver) {
           gameOver = false
+          count = 2
+          score.innerHTML = "SCORE:1"
           startGame()
         }
         downArrow = false;
@@ -104,6 +107,8 @@ const checkKey = (e) => {
         // down arrow
         if(gameOver) {
           gameOver = false
+          count = 2
+          score.innerHTML = "SCORE:1"
           startGame()
         }
         upArrow = false;
@@ -115,6 +120,8 @@ const checkKey = (e) => {
        // left arrow
        if(gameOver) {
          gameOver = false
+         count = 2
+         score.innerHTML = "SCORE:1"
          startGame()
        }
        upArrow = false;
@@ -126,6 +133,8 @@ const checkKey = (e) => {
      // right arrow
      if(gameOver) {
        gameOver = false
+       count = 2
+       score.innerHTML = "SCORE:1"
        startGame()
      }
      upArrow = false;
@@ -172,6 +181,8 @@ const eatFood = () => {
     food.cell = generateFood(snake.body())
     let foodObj = document.getElementById(food.cell)
     foodObj.style.backgroundColor = 'Red'
+    score.innerHTML = 'SCORE:' + count.toString();
+    count ++
   }
 }
 const reset = async () => {

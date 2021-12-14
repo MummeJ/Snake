@@ -26,8 +26,8 @@ body {
 }
 
 .wrapper {
-  height: 100%;
-  width: 80%;
+  height: 850px;
+  width: 826px;
   margin: auto;
 }
 
@@ -64,9 +64,9 @@ H1 {
 }
 .tabs {
   width: 610px;
-  height: 20px;
-  padding-top: 30px;
+  height: 35px;
   margin: auto;
+  margin-top: 50px;
 }
 
 ul {
@@ -111,11 +111,6 @@ li:hover {
   width: 610px;
   height: 610px;
   background-color: #fff8c2;
-  position: absolute;
-  top:0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   margin: auto;
   border: 5px solid black;
   box-shadow: 2px 2px 5px black;

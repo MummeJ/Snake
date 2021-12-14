@@ -1,0 +1,131 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  /* background-color: #696869; */
+  background-image: url("../img/background2.jpg");
+  background-repeat: repeat;
+}
+
+.overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #adadad;
+  z-index: -1;
+  opacity: 60%;
+
+}
+
+.wrapper {
+  height: 100%;
+  width: 80%;
+  margin: auto;
+}
+
+.titleBox {
+  width: 610px;
+  height: 100px;
+  padding-top: 20px;
+  margin: auto;
+}
+
+H1 {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 80px;
+  text-align: center;
+  /* color: #FFF !Important; */
+  z-index: 1;
+  background-image: linear-gradient(45deg, #020aeb, #eb0000);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 30px;
+  text-align: center;
+  /* color: #FFF !Important; */
+  z-index: 3;
+  background-image: linear-gradient(45deg, #020aeb, #eb0000);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+.tabs {
+  width: 610px;
+  height: 20px;
+  padding-top: 30px;
+  margin: auto;
+}
+
+ul {
+  display: flex;
+  justify-content: flex-start;
+  list-style-type: none;
+  background-color: #fff8c2;
+  border: 5px solid black;
+}
+
+#score{
+  font-family: 'Press Start 2P', cursive;
+  color: #a30000;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: bold;
+  background-color: 'red';
+  padding-top: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+
+.tab {
+  font-family: 'Press Start 2P', cursive;
+  color: #a30000;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: 'red';
+  padding-top: 8px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+li:hover {
+  background-color: #dbdbdb
+}
+.grid {
+  width: 610px;
+  height: 610px;
+  background-color: #fff8c2;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: 5px solid black;
+  box-shadow: 2px 2px 5px black;
+ }
+.block {
+  height: 25px;
+  width: 25px;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  float: left;
+  border-radius: 50%;
+}

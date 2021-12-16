@@ -5,7 +5,12 @@ for (let i = 1; i < 577; i++) {
   div.setAttribute('id', i)
   grid.appendChild(div);
 }
-let count = 2
+window.addEventListener("keydown", function(e) {
+    if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+        e.preventDefault();
+    }
+}, false);
+let count = 1
 const score = document.getElementById('score')
 let speed = 8
 const pause = (num) => {
@@ -94,8 +99,8 @@ const checkKey = (e) => {
         // up arrow
         if(gameOver) {
           gameOver = false
-          count = 2
-          score.innerHTML = "SCORE:1"
+          count = 1
+          score.innerHTML = "SCORE:0"
           startGame()
         }
         downArrow = false;
@@ -107,8 +112,8 @@ const checkKey = (e) => {
         // down arrow
         if(gameOver) {
           gameOver = false
-          count = 2
-          score.innerHTML = "SCORE:1"
+          count = 1
+          score.innerHTML = "SCORE:0"
           startGame()
         }
         upArrow = false;
@@ -120,8 +125,8 @@ const checkKey = (e) => {
        // left arrow
        if(gameOver) {
          gameOver = false
-         count = 2
-         score.innerHTML = "SCORE:1"
+         count = 1
+         score.innerHTML = "SCORE:0"
          startGame()
        }
        upArrow = false;
@@ -133,8 +138,8 @@ const checkKey = (e) => {
      // right arrow
      if(gameOver) {
        gameOver = false
-       count = 2
-       score.innerHTML = "SCORE:1"
+       count = 1
+       score.innerHTML = "SCORE:0"
        startGame()
      }
      upArrow = false;
@@ -333,5 +338,3 @@ let food = new Food()
 let foodObj = document.getElementById(food.cell)
 foodObj.style.backgroundColor = 'Red'
 document.onkeydown = checkKey;
-
-// export { speed };

@@ -5,6 +5,6 @@ from flask import Flask
 app = Flask(__name__)
 app.secret_key = 'fNcgi1wF8ZIv4K1g25GW-Q'
 
-import routes
+from . import routes
 # db.init_app(app)
 app.register_blueprint(routes.bp)

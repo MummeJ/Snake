@@ -97,7 +97,7 @@ const checkKey = (e) => {
 
     if (e.keyCode == '38') {
         // up arrow
-        if(gameOver) {
+        if(gameOver && snake.head.cell === 276) {
           gameOver = false
           count = 1
           score.innerHTML = "SCORE:0"
@@ -110,7 +110,7 @@ const checkKey = (e) => {
     }
     else if (e.keyCode == '40') {
         // down arrow
-        if(gameOver) {
+        if(gameOver && snake.head.cell === 276) {
           gameOver = false
           count = 1
           score.innerHTML = "SCORE:0"
@@ -123,7 +123,7 @@ const checkKey = (e) => {
     }
     else if (e.keyCode == '37') {
        // left arrow
-       if(gameOver) {
+       if(gameOver && snake.head.cell === 276) {
          gameOver = false
          count = 1
          score.innerHTML = "SCORE:0"
@@ -136,7 +136,7 @@ const checkKey = (e) => {
     }
     else if (e.keyCode == '39') {
      // right arrow
-     if(gameOver) {
+     if(gameOver && snake.head.cell === 276) {
        gameOver = false
        count = 1
        score.innerHTML = "SCORE:0"
@@ -207,6 +207,7 @@ const reset = async () => {
   food = new Food()
   foodObj = document.getElementById(food.cell)
   foodObj.style.backgroundColor = 'Red'
+
 }
 
 class Node {

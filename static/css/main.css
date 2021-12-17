@@ -27,7 +27,7 @@ body {
 
 .wrapper {
   height: 850px;
-  width: 826px;
+  width: 95%;
   margin: auto;
 }
 
@@ -36,6 +36,18 @@ body {
   height: 100px;
   padding-top: 20px;
   margin: auto;
+}
+
+table {
+  display: inline-block;
+  position: relative;
+  float: right;
+  width: 200px;
+  border: 5px solid black;
+  margin-left: auto;
+  margin-right: 0;
+  margin-bottom: auto;
+  margin-top: 0
 }
 
 H1 {
@@ -116,7 +128,7 @@ li:hover {
   border: 5px solid black;
   box-shadow: 2px 2px 5px black;
  }
- 
+
 .block {
   height: 25px;
   width: 25px;

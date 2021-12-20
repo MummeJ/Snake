@@ -25,6 +25,25 @@ body {
 
 }
 
+.unavailable {
+  display: none;
+  height: 80%;
+  width: 80%;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.unavailable-msg {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 30px;
+  text-align: center;
+  z-index: 1;
+  background-image: linear-gradient(45deg, #020aeb, #eb0000);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .wrapper {
   height: 850px;
   width: 95%;
@@ -184,4 +203,14 @@ li:hover {
   padding: 0;
   float: left;
   border-radius: 50%;
+}
+
+@media screen and (max-width:768px){
+  .wrapper {
+    display: none;
+  }
+
+  .unavailable {
+    display: block;
+  }
 }

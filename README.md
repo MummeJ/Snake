@@ -13,10 +13,11 @@ This is remake of the traditional centipede game. It is powered by Flask and all
         - `base.html` - The base template that all other templates extend.
         - `index.html` - Main template or "homepage".
      - `__init__.py` - File that creates an instance of Flask app.
-     - `api_request.py` - File containing all api requests.
+     - `database.py` - Creates database.
      - `routes.py` - Contains all of the routes.
-     - `Procfile` - Tells Heroku where the app is.
-     - `requirements.txt` - Application requirements.
+   - `Procfile` - Tells Heroku where the app is.
+   - `requirements.txt` - Application requirements.
+   - `wsgi.py` - Creates instance of app.
 
 ### ==Executing Program== ###
 To run, set the following environment variables:
